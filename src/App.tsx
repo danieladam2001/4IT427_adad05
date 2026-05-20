@@ -1,12 +1,12 @@
 import { FilmCard, type FilmCardProps } from './components/FilmCard';
 
-type FilmData = FilmCardProps
+type FilmData = FilmCardProps;
 
 const moviesData: FilmData[] = [
 {
     title: "Inception",
     year: 2010,
-    genre: "Sci-Fi / Thriller",
+    genre: "Thriller",
     rating: 9,
     watched: true,
     onToggleWatched: () => console.log()
@@ -14,26 +14,29 @@ const moviesData: FilmData[] = [
   {
     title: "The Dark Knight",
     year: 2008,
-    genre: "Akční / Drama",
-    rating: 10,
+    genre: "Akční",
+    rating: 8,
     watched: true,
     onToggleWatched: () => console.log()
   },
   {
     title: "Interstellar",
     year: 2014,
-    genre: "Sci-Fi / Dobrodružný",
+    genre: "Sci-Fi",
     rating: 9,
     watched: false,
     onToggleWatched: () => console.log()
   }
 ];
 
+const handleToggleWatched = (title: string): void => {
+    console.log(` Stav zhlédnutí se mění pro film: "${title}"`);
+  };
 
 function App() {
   return (
     <>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '16px' }}>
+      <div>
         {moviesData.map((movie) => (
           <FilmCard 
             key={movie.title}
@@ -42,7 +45,7 @@ function App() {
             genre={movie.genre}
             rating={movie.rating}
             watched={movie.watched}
-            onToggleWatched={movie.onToggleWatched}
+            onToggleWatched={handleToggleWatched}
           />
         ))}
       </div> 
