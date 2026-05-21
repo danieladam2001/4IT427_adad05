@@ -1,56 +1,47 @@
-import { FilmCard, type FilmCardProps } from './components/FilmCard';
-
-type FilmData = FilmCardProps;
-
-const moviesData: FilmData[] = [
-{
+import FilmCard from "./components/FilmCard";
+const films = [
+  {
     title: "Inception",
     year: 2010,
-    genre: "Thriller",
+    genre: "Sci-fi",
     rating: 9,
     watched: true,
-    onToggleWatched: () => console.log()
+  },
+  {
+    title: "Interstellar",
+    year: 2014,
+    genre: "Sci-fi",
+    rating: 10,
+    watched: false,
   },
   {
     title: "The Dark Knight",
     year: 2008,
     genre: "Akční",
-    rating: 8,
-    watched: true,
-    onToggleWatched: () => console.log()
-  },
-  {
-    title: "Interstellar",
-    year: 2014,
-    genre: "Sci-Fi",
     rating: 9,
-    watched: false,
-    onToggleWatched: () => console.log()
-  }
+    watched: true,
+  },
 ];
 
-const handleToggleWatched = (title: string): void => {
-    console.log(` Stav zhlédnutí se mění pro film: "${title}"`);
-  };
-
 function App() {
+  const handleToggleWatched = (title: string) => {
+    console.log(`Kliknuto na film: ${title}`);
+  };
   return (
-    <>
-      <div>
-        {moviesData.map((movie) => (
-          <FilmCard 
-            key={movie.title}
-            title={movie.title}
-            year={movie.year}
-            genre={movie.genre}
-            rating={movie.rating}
-            watched={movie.watched}
-            onToggleWatched={handleToggleWatched}
-          />
-        ))}
-      </div> 
-    </>
-  )
+    <main>
+      <h1>Film Watchlist</h1>
+      {films.map((film) => (
+        <FilmCard
+          title={film.title}
+          year={film.year}
+          genre={film.genre}
+          rating={film.rating}
+          watched={film.watched}
+          onToggleWatched={handleToggleWatched}
+        />
+      ))}
+    </main>
+  );
 }
 
-export default App
+export default App;

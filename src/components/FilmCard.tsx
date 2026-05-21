@@ -1,10 +1,8 @@
-type RatingRange = 1|2|3|4|5|6|7|8|9|10;
-
 interface FilmCardProps {
   title: string;
   year: number;
   genre: string;
-  rating: RatingRange; // Očekává se číslo od 1 do 10
+  rating: number;
   watched: boolean;
   onToggleWatched: (title: string) => void;
 }
@@ -16,14 +14,16 @@ function FilmCard({
   rating,
   watched,
   onToggleWatched,
-}: FilmCardProps){
+}: FilmCardProps) {
+  const isRatingValid = rating >= 1 && rating <= 10;
+
   return (
     <div>
       <h2>{title}</h2>
-      <p>Rok vydání: {year}</p>
+      <p>Rok: {year}</p>
       <p>Žánr: {genre}</p>
-      <p>Hodnocení: {rating}</p>
-      <p>Viděno: {watched === true ? '✓ Zhlédnuto' : 'Ne'}</p>
+      <p>⭐ {isRatingValid ? rating : "Neplatné hodnocení"}/10</p>
+      {watched && <p>✓ Zhlédnuto</p>}
       <button onClick={() => onToggleWatched(title)}>
         Změnit stav zhlédnutí
       </button>
@@ -31,4 +31,4 @@ function FilmCard({
   );
 }
 
-export { FilmCard, type FilmCardProps };
+export default FilmCard;
