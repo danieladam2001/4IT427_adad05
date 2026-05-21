@@ -1,11 +1,4 @@
-interface FilmCardProps {
-  title: string;
-  year: number;
-  genre: string;
-  rating: number;
-  watched: boolean;
-  onToggleWatched: (title: string) => void;
-}
+import { type FilmCardProps } from "../types/film.types";
 
 function FilmCard({
   title,
@@ -23,7 +16,7 @@ function FilmCard({
       <p>Rok: {year}</p>
       <p>Žánr: {genre}</p>
       <p>⭐ {isRatingValid ? rating : "Neplatné hodnocení"}/10</p>
-      {watched && <p>✓ Zhlédnuto</p>}
+      {watched === true ? <p>✓ Zhlédnuto</p> : <p>Nezhlédnuto</p>}
       <button onClick={() => onToggleWatched(title)}>
         Změnit stav zhlédnutí
       </button>
