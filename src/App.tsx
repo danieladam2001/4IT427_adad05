@@ -3,9 +3,9 @@ import { useWatchlist } from "./hooks/useWatchlist";
 import { type Film } from "./types/film.types";
 
 const INITIAL_FILMS: Film[] = [
-  { title: "Inception", year: 2010, genre: "Sci-fi", rating: 9, watched: true },
-  { title: "Interstellar", year: 2014, genre: "Sci-fi", rating: 10, watched: false },
-  { title: "The Dark Knight", year: 2008, genre: "Akční", rating: 9, watched: true },
+  {id: "1", title: "Inception", year: 2010, genre: "Sci-fi", rating: 9, watched: true },
+  {id: "2", title: "Interstellar", year: 2014, genre: "Sci-fi", rating: 10, watched: false },
+  {id: "3", title: "The Dark Knight", year: 2008, genre: "Akční", rating: 9, watched: true },
 ];
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
       <div>
         {films.map((film) => (
           <FilmCard
-            key={film.title}
+            key={film.id}
             title={film.title}
             year={film.year}
             genre={film.genre}

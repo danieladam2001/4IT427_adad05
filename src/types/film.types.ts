@@ -1,4 +1,4 @@
-export interface Film {
+export interface FilmBase {
   title: string;
   year: number;
   genre: string;
@@ -6,6 +6,10 @@ export interface Film {
   watched: boolean;
 }
 
-export interface FilmCardProps extends Film {
+export interface Film extends FilmBase {
+  id: string;
+}
+
+export interface FilmCardProps extends FilmBase {
   onToggleWatched: (title: string) => void;
 }
