@@ -1,2 +1,2 @@
 @import "tailwindcss";
-@variant dark (false);
+@variant dark selector(.dark &);

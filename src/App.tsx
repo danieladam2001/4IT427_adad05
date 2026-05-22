@@ -1,10 +1,20 @@
 import { AddFilmForm } from "./components/AddFilmForm";
 import { FilmCard } from "./components/FilmCard";
 import { useWatchlist } from "./context/WatchlistContext";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
   const { films, markAllAsWatched } = useWatchlist();
   const seenFilmsCount = films.filter((film) => film.watched).length; 
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 p-4 md:p-8 antialiased text-zinc-900 dark:text-zinc-50">
@@ -18,6 +28,14 @@ function App() {
               Zhlédnuto: <span className="font-bold text-amber-500">{seenFilmsCount}</span> z <span className="font-bold text-zinc-700 dark:text-zinc-300">{films.length}</span> filmů
             </h2>
           </div>
+
+
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="text-xs font-bold px-4 py-2.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 shadow-sm transition-all cursor-pointer"
+          >
+            {darkMode ? "☀️ Světlý režim" : "🌙 Tmavý režim"}
+          </button>
 
           {/* Action Button */}
           <button 
