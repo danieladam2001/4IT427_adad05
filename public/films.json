@@ -1,0 +1,7 @@
+[
+  {"id": "1", "title": "Inception", "year": 2010, "genre": "Sci-fi", "rating": 9, "watched": true },
+  {"id": "2", "title": "Interstellar", "year": 2014, "genre": "Sci-fi", "rating": 10, "watched": false },
+  {"id": "3", "title": "The Dark Knight", "year": 2008, "genre": "Akční", "rating": 9, "watched": true },
+  {"id": "4", "title": "Star Wars", "year": 2010, "genre": "Sci-fi", "rating": 9, "watched": true },
+  {"id": "5", "title": "Hobbit", "year": 2007, "genre": "Fantasy", "rating": 10, "watched": true }
+]

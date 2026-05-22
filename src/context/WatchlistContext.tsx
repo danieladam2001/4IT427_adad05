@@ -1,15 +1,17 @@
 import { createContext, type ReactNode, useReducer, useContext, useEffect } from "react";
 import { type Film } from '../types/film.types';
+import { useQuery } from "@tanstack/react-query";
 
-const INITIAL_FILMS: Film[] = [
-  {id: "1", title: "Inception", year: 2010, genre: "Sci-fi", rating: 9, watched: true },
-  {id: "2", title: "Interstellar", year: 2014, genre: "Sci-fi", rating: 10, watched: false },
-  {id: "3", title: "The Dark Knight", year: 2008, genre: "Akční", rating: 9, watched: true },
-  {id: "4", title: "Star Wars", year: 2010, genre: "Sci-fi", rating: 9, watched: true },
-  {id: "5", title: "Hobbit", year: 2007, genre: "Fantasy", rating: 10, watched: true }
-];
+const fetchFilms = async (): Promise<Film[]> => {
+  const response = await fetch('/films.json');
+  if (!response.ok) {
+    throw new Error("Nepodařilo se načíst data o filmech");
+  }
+  return response.json();
+};
 
 type FilmAction =
+  | { type: 'SET_FILMS'; payload: Film[] }
   | { type: 'TOGGLE_WATCHED'; payload: { id: string } }
   | { type: 'MARK_ALL_AS_WATCHED' }
   | { type: 'ADD_FILM'; payload: Omit<Film, 'id'> }
@@ -21,11 +23,16 @@ interface FilmContextType {
   markAllAsWatched: () => void;
   addFilm: (film: Omit<Film, 'id'>) => void;
   removeFilm: (id: string) => void;
+  isLoading: boolean;
+  isError: boolean;
+  refetch: () => void;
 }
 
 function filmReducer(state: Film[], action: FilmAction): Film[] {
 
   switch (action.type) {
+    case 'SET_FILMS':
+      return action.payload;
     case 'TOGGLE_WATCHED':
       return state.map((film) =>
         film.id === action.payload.id ? { ...film, watched: !film.watched } : film
@@ -57,7 +64,18 @@ function filmReducer(state: Film[], action: FilmAction): Film[] {
 const WatchListContext = createContext<FilmContextType>({} as FilmContextType);
 
 export function FilmProvider({ children }: { children: ReactNode }) {
-  const [films, dispatch] = useReducer(filmReducer, INITIAL_FILMS);
+  const [films, dispatch] = useReducer(filmReducer, []);
+
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["films"],
+    queryFn: fetchFilms,
+  });
+
+  useEffect(() => {
+    if (data) {
+      dispatch({ type: 'SET_FILMS', payload: data });
+    }
+  }, [data]);
 
   const toggleWatched = (id: string) => {
     dispatch({ type: 'TOGGLE_WATCHED', payload: { id } });
@@ -82,7 +100,7 @@ export function FilmProvider({ children }: { children: ReactNode }) {
   }, [films]);
 
   return (
-    <WatchListContext.Provider value={{ films, toggleWatched, markAllAsWatched, addFilm, removeFilm }}>
+    <WatchListContext.Provider value={{ films, isLoading, isError, refetch, toggleWatched, markAllAsWatched, addFilm, removeFilm }}>
       {children}
     </WatchListContext.Provider>
   );
