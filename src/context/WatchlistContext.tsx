@@ -9,12 +9,16 @@ const INITIAL_FILMS: Film[] = [
 
 type FilmAction =
   | { type: 'TOGGLE_WATCHED'; payload: { id: string } }
-  | { type: 'MARK_ALL_AS_WATCHED' };
+  | { type: 'MARK_ALL_AS_WATCHED' }
+  | { type: 'ADD_FILM'; payload: Omit<Film, 'id'> }
+  | { type: 'REMOVE_FILM'; payload: { id: string}};
 
 interface FilmContextType {
   films: Film[];
   toggleWatched: (id: string) => void;
   markAllAsWatched: () => void;
+  addFilm: (film: Omit<Film, 'id'>) => void;
+  removeFilm: (id: string) => void;
 }
 
 function filmReducer(state: Film[], action: FilmAction): Film[] {
@@ -30,6 +34,19 @@ function filmReducer(state: Film[], action: FilmAction): Film[] {
         watched: true
         })
       );
+    case 'ADD_FILM':
+      return [
+        ...state,
+        {
+          ...action.payload,
+          id: crypto.randomUUID(),
+          watched: false,
+        },
+      ];
+    case 'REMOVE_FILM':
+      return state.filter((film) => 
+        film.id !== action.payload.id
+      )
     default:
       return state;
   }
@@ -40,7 +57,6 @@ const WatchListContext = createContext<FilmContextType>({} as FilmContextType);
 export function FilmProvider({ children }: { children: ReactNode }) {
   const [films, dispatch] = useReducer(filmReducer, INITIAL_FILMS);
 
-  // Obalení dispatch funkcí do srozumitelných metod pro komponenty
   const toggleWatched = (id: string) => {
     dispatch({ type: 'TOGGLE_WATCHED', payload: { id } });
   };
@@ -49,6 +65,14 @@ export function FilmProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'MARK_ALL_AS_WATCHED' });
   };
 
+  const addFilm = (film: Omit<Film, 'id'>) => {
+    dispatch({ type: 'ADD_FILM', payload: film });
+  };
+
+  const removeFilm = (id: string) => {
+    dispatch({ type: 'REMOVE_FILM', payload: { id }})
+  }
+
   useEffect(() => {
     const watchedCount = films.filter((film) => film.watched).length;
     const totalCount = films.length;
@@ -56,7 +80,7 @@ export function FilmProvider({ children }: { children: ReactNode }) {
   }, [films]);
 
   return (
-    <WatchListContext.Provider value={{ films, toggleWatched, markAllAsWatched }}>
+    <WatchListContext.Provider value={{ films, toggleWatched, markAllAsWatched, addFilm, removeFilm }}>
       {children}
     </WatchListContext.Provider>
   );

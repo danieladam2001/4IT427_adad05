@@ -12,4 +12,5 @@ export interface Film extends FilmBase {
 
 export interface FilmCardProps extends FilmBase {
   onToggleWatched: (title: string) => void;
+  onDeleteMovie: (title: string) => void;
 }

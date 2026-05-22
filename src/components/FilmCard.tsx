@@ -1,12 +1,13 @@
 import { type FilmCardProps } from "../types/film.types";
 
-function FilmCard({
+export function FilmCard({
   title,
   year,
   genre,
   rating,
   watched,
   onToggleWatched,
+  onDeleteMovie
 }: FilmCardProps) {
   const isRatingValid = rating >= 1 && rating <= 10;
 
@@ -19,6 +20,9 @@ function FilmCard({
       {watched === true ? <p>✓ Zhlédnuto</p> : <p>Nezhlédnuto</p>}
       <button onClick={() => onToggleWatched(title)}>
         Změnit stav zhlédnutí
+      </button>
+      <button onClick={() => onDeleteMovie(title)}>
+        Odstranit film
       </button>
     </div>
   );

@@ -1,12 +1,15 @@
-import FilmCard from "./components/FilmCard";
+import { AddFilmForm } from "./components/AddFilmForm";
+import { FilmCard } from "./components/FilmCard";
 import { useWatchlist } from "./context/WatchlistContext";
 
 function App() {
-  const { films, toggleWatched, markAllAsWatched } = useWatchlist();
+  const { films, toggleWatched, markAllAsWatched, removeFilm } = useWatchlist();
+  const seenFilmsCount = films.filter((film) => film.watched).length; 
 
   return (
     <main style={{ padding: "20px", fontFamily: "sans-serif" }}>
       <h1>Film Watchlist</h1>
+      <h2>Zhlédnuto: {seenFilmsCount} / {films.length}</h2>
 
       <button onClick={markAllAsWatched}>
         Označit vše
@@ -22,8 +25,13 @@ function App() {
             rating={film.rating}
             watched={film.watched}
             onToggleWatched={() => toggleWatched(film.id)}
+            onDeleteMovie={() => removeFilm(film.id)}
           />
         ))}
+      </div>
+
+      <div>
+        <AddFilmForm></AddFilmForm>
       </div>
     </main>
   );
