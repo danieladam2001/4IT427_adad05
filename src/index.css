@@ -1,2 +1,2 @@
 @import "tailwindcss";
-@variant dark selector(.dark &);
+@variant dark (:where(.dark) &);
