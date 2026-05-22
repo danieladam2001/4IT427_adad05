@@ -1,8 +1,11 @@
 import { useState, type FormEvent } from 'react';
 import { useWatchlist } from '../context/WatchlistContext';
+import { useNavigate } from 'react-router-dom';
 
 export function AddFilmForm() {
   const { addFilm } = useWatchlist();
+
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
   const [year, setYear] = useState('');
@@ -29,6 +32,8 @@ export function AddFilmForm() {
     setYear('');
     setGenre('');
     setRating('5');
+
+    navigate('/');
   };
 
   return (
