@@ -105,7 +105,7 @@ export function AddFilmForm() {
       {/* Submit Button */}
       <button 
         type="submit"
-        className="w-full text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 active:scale-[0.99] py-2.5 px-4 rounded-lg transition-all shadow-sm shadow-amber-500/10 focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+        className="w-full text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 active:scale-[0.99] py-2.5 px-4 rounded-lg transition-all shadow-sm shadow-amber-500/10 focus:outline-none focus:ring-2 focus:ring-amber-500/50 cursor-pointer"
       >
         Přidat film
       </button>

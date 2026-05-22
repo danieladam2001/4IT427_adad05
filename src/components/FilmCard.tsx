@@ -26,13 +26,13 @@ export function FilmCard() {
           <div className="flex gap-2 mt-auto pt-3 border-t border-zinc-100 dark:border-zinc-800">
             <button 
               onClick={() => toggleWatched(film.id)}
-              className="flex-1 text-xs font-semibold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 py-2 px-3 rounded-lg transition-colors"
+              className="flex-1 text-xs font-semibold text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 py-2 px-3 rounded-lg transition-colors cursor-pointer"
             >
               Změnit stav zhlédnutí
             </button>
             <button 
               onClick={() => removeFilm(film.id)}
-              className="text-xs font-semibold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 dark:hover:bg-rose-950/40 py-2 px-3 rounded-lg transition-colors"
+              className="text-xs font-semibold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 dark:hover:bg-rose-950/40 py-2 px-3 rounded-lg transition-colors cursor-pointer"
             >
               Odstranit film
             </button>
