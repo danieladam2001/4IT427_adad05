@@ -2,14 +2,6 @@ import { createContext, type ReactNode, useReducer, useContext, useEffect } from
 import { type Film } from '../types/film.types';
 import { useQuery } from "@tanstack/react-query";
 
-const fetchFilms = async (): Promise<Film[]> => {
-  const response = await fetch('/films.json');
-  if (!response.ok) {
-    throw new Error("Nepodařilo se načíst data o filmech");
-  }
-  return response.json();
-};
-
 type FilmAction =
   | { type: 'SET_FILMS'; payload: Film[] }
   | { type: 'TOGGLE_WATCHED'; payload: { id: string } }
@@ -67,8 +59,9 @@ export function FilmProvider({ children }: { children: ReactNode }) {
   const [films, dispatch] = useReducer(filmReducer, []);
 
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["films"],
-    queryFn: fetchFilms,
+    queryKey: ['films'],
+    queryFn: () => fetch('/films.json').then((r) => r.json() as Promise<Film[]>),
+    staleTime: 60_000,
   });
 
   useEffect(() => {
