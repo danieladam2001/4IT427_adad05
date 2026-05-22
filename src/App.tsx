@@ -3,7 +3,7 @@ import { FilmCard } from "./components/FilmCard";
 import { useWatchlist } from "./context/WatchlistContext";
 
 function App() {
-  const { films, toggleWatched, markAllAsWatched, removeFilm } = useWatchlist();
+  const { films, markAllAsWatched } = useWatchlist();
   const seenFilmsCount = films.filter((film) => film.watched).length; 
 
   return (
@@ -16,18 +16,7 @@ function App() {
       </button>
 
       <div>
-        {films.map((film) => (
-          <FilmCard
-            key={film.id}
-            title={film.title}
-            year={film.year}
-            genre={film.genre}
-            rating={film.rating}
-            watched={film.watched}
-            onToggleWatched={() => toggleWatched(film.id)}
-            onDeleteMovie={() => removeFilm(film.id)}
-          />
-        ))}
+        <FilmCard></FilmCard>
       </div>
 
       <div>

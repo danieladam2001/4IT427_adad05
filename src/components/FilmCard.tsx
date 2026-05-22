@@ -1,29 +1,26 @@
-import { type FilmCardProps } from "../types/film.types";
+import { useWatchlist } from "@/context/WatchlistContext";
 
-export function FilmCard({
-  title,
-  year,
-  genre,
-  rating,
-  watched,
-  onToggleWatched,
-  onDeleteMovie
-}: FilmCardProps) {
-  const isRatingValid = rating >= 1 && rating <= 10;
+export function FilmCard() {
+
+  const { films, toggleWatched, removeFilm } = useWatchlist();
 
   return (
     <div>
-      <h2>{title}</h2>
-      <p>Rok: {year}</p>
-      <p>Žánr: {genre}</p>
-      <p>⭐ {isRatingValid ? rating : "Neplatné hodnocení"}/10</p>
-      {watched === true ? <p>✓ Zhlédnuto</p> : <p>Nezhlédnuto</p>}
-      <button onClick={() => onToggleWatched(title)}>
-        Změnit stav zhlédnutí
-      </button>
-      <button onClick={() => onDeleteMovie(title)}>
-        Odstranit film
-      </button>
+      {films.map((film) => (
+        <div>
+          <h2>{film.title}</h2>
+          <p>Rok: {film.year}</p>
+          <p>Žánr: {film.genre}</p>
+          <p>⭐ {film.rating >= 1 && film.rating <= 10 ? film.rating : "Neplatné hodnocení"}/10</p>
+          {film.watched === true ? <p>✓ Zhlédnuto</p> : <p>Nezhlédnuto</p>}
+          <button onClick={() => toggleWatched(film.id)}>
+            Změnit stav zhlédnutí
+          </button>
+          <button onClick={() => removeFilm(film.id)}>
+            Odstranit film
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
