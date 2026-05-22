@@ -39,7 +39,7 @@ function filmReducer(state: Film[], action: FilmAction): Film[] {
         ...state,
         {
           ...action.payload,
-          id: crypto.randomUUID(),
+          id: crypto.randomUUID(),  // TODO: přesunout do AddFilmForm
           watched: false,
         },
       ];
